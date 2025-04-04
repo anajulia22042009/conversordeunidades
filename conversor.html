@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Unidades</title>
+    <style>
+        body {
+            background-color: #ffeb3b; /* Amarelo */
+            color: #000;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff; /* Branco */
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        select, input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ffeb3b;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ffeb3b;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #fbc02d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversor de Unidades</h1>
+    <div class="container">
+        <h2>Conversor de Moedas</h2>
+        <input type="number" id="currencyInput" placeholder="Valor">
+        <select id="fromCurrency">
+            <option value="BRL">BRL</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+        <select id="toCurrency">
+            <option value="BRL">BRL</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+        <button onclick="convertCurrency()">Converter</button>
+        <p id="currencyResult"></p>
+    </div>
+
+    <div class="container">
+        <h2>Conversor de Temperaturas</h2>
+        <input type="number" id="tempInput" placeholder="Temperatura">
+        <select id="fromTemp">
+            <option value="C">Celsius</option>
+            <option value="F">Fahrenheit</option>
+            <option value="K">Kelvin</option>
+        </select>
+        <select id="toTemp">
+            <option value="C">Celsius</option>
+            <option value="F">Fahrenheit</option>
+            <option value="K">Kelvin</option>
+        </select>
+        <button onclick="convertTemperature()">Converter</button>
+        <p id="tempResult"></p>
+    </div>
+
+    <div class="container">
+        <h2>Conversor de Distâncias</h2>
+        <input type="number" id="distanceInput" placeholder="Distância">
+        <select id="fromDistance">
+            <option value="m">Metros</option>
+            <option value="km">Quilômetros</option>
+            <option value="mi">Milhas</option>
+        </select>
+        <select id="toDistance">
+            <option value="m">Metros</option>
+            <option value="km">Quilômetros</option>
+            <option value="mi">Milhas</option>
+        </select>
+        <button onclick="convertDistance()">Converter</button>
+        <p id="distanceResult"></p>
+    </div>
+
+    <script>
+        function convertCurrency() {
+            const value = parseFloat(document.getElementById("currencyInput").value);
+            const from = document.getElementById("fromCurrency").value;
+            const to = document.getElementById("toCurrency").value;
+            let result;
+
+            // Taxas de conversão fictícias (atualize com APIs reais)
+            const rates = { BRL: 1, USD: 5.5, EUR: 6.2 };
+            result = (value / rates[from]) * rates[to];
+            document.getElementById("currencyResult").innerText = `${value} ${from} = ${result.toFixed(2)} ${to}`;
+        }
+
+        function convertTemperature() {
+            const value = parseFloat(document.getElementById("tempInput").value);
+            const from = document.getElementById("fromTemp").value;
+            const to = document.getElementById("toTemp").value;
+            let result;
+
+            if (from === "C") {
+                if (to === "F") result = (value * 9/5) + 32;
+                else if (to === "K") result = value + 273.15;
+                else result = value;
+            } else if (from === "F") {
+                if (to === "C") result = (value - 32) * 5/9;
+                else if (to === "K") result = (value - 32) * 5/9 + 273.15;
+                else result = value;
+            } else if (from === "K") {
+                if (to === "C") result = value - 273.15;
+                else if (to === "F") result = (value - 273.15) * 9/5 + 32;
+                else result = value;
+            }
+            document.getElementById("tempResult").innerText = `${value} °${from} = ${result.toFixed(2)} °${to}`;
+        }
+
+        function convertDistance() {
+            const value = parseFloat(document.getElementById("distanceInput").value);
+            const from = document.getElementById("fromDistance").value;
+            const to = document.getElementById("toDistance").value;
+            let result;
+
+            const conversions = { m: 1, km: 1000, mi: 1609.34 };
+            result = (value * conversions[from]) / conversions[to];
+            document.getElementById("distanceResult").innerText = `${value} ${from} = ${result.toFixed(2)} ${to}`;
+        }
+    </script>
+</body>
+</html>
